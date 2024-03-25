@@ -5,6 +5,7 @@ import './App.css';
 import { Map, Marker, Popup } from 'react-leaflet';
 import { sendMessage } from './API';
 const MessageCardForm = (props) => {
+  console.log('Clicked Address in MessageCardForm:', props.clickedAddress);
   const [selectedMessage, setSelectedMessage] = useState(null); 
   const [state, setState] = useState({
 
@@ -109,6 +110,10 @@ const MessageCardForm = (props) => {
       <Form onSubmit={handleSubmit}>
       <div className="form-container">
   <div className="column">
+  <FormGroup>
+          <Label for="Address">Address</Label>
+          <Input type="text" name="Address" id="Address" value={props.clickedAddress} disabled />
+        </FormGroup>
     <FormGroup>
       <Label for="BuildingType">Building Type</Label>
       <Input type="text" name="BuildingType" id="BuildingType" value={state.userMessage.BuildingType} onChange={handleChange} />

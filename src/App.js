@@ -19,6 +19,8 @@ const messageIcon = L.icon({
 
 class App extends Component {
   state = {
+    clickedLocation: null, // Thêm state mới để lưu trữ tọa độ khi người dùng click
+    clickedAddress: '', // Thêm state để lưu địa chỉ từ việc click
     messages: [],
     location: {
       lat: 21.0285, // Latitude của Hà Nội
@@ -32,6 +34,7 @@ class App extends Component {
     selectedMessage: null,
     formIsValid: false,
     userMessage: {
+      address: '',
       BuildingType: '',
       BuildingAge: '',
       InsuranceElectronic: false,
@@ -77,6 +80,7 @@ class App extends Component {
       
       const message = {
         ...this.state.userMessage,
+        address: this.state.clickedAddress // Truyền địa chỉ từ việc click vào form
         // latitude: this.state.location.lat,
         // longitude: this.state.location.lng,
       };
@@ -140,17 +144,33 @@ class App extends Component {
     });
   };
 
-  handleMarkerClick = (message) => {
-    this.setState({
-      selectedMessage: message
-    });
-  };
-  handleClick = () => {
+
+  handleMapClick = (e) => {
+    const { lat, lng } = e.latlng;
     this.setState({
       showMessageForm: true,
-      // Các cập nhật khác khi đóng biểu mẫu
+      clickedLocation: { lat, lng }
     });
-  }
+    this.getAddressFromCoordinates(lat, lng); // Gọi hàm để lấy địa chỉ từ tọa độ
+  };
+  getAddressFromCoordinates = (lat, lng) => {
+    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          clickedAddress: data.display_name
+          
+        });
+        console.log('Clicked Address in App:', data.display_name); 
+      })
+      .catch(error => {
+        console.error('Error fetching address:', error);
+        this.setState({
+          clickedAddress: 'Address not found'
+        });
+      });
+  };
+  
 
   handleClosePopup = () => {
     this.setState({
@@ -167,18 +187,25 @@ class App extends Component {
           worldCopyJump={true}
           center={centerOfHanoi}
           zoom={this.state.zoom}
-          onClick={this.handleClick} 
+          onClick={this.handleMapClick} 
           >
           <TileLayer
             attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors and Chat location by Iconika from the Noun Project"
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {this.state.haveUsersLocation && (
-            <Marker position={centerOfHanoi} icon={myIcon} onClick={this.handleClick}>
-    <Popup>
-      Click here!
-    </Popup>
-  </Marker>
+            <Marker position={centerOfHanoi} icon={myIcon} onClick={this.handleMapClick}>
+              <Popup>
+                Click here!
+              </Popup>
+            </Marker>
+          )}
+          {this.state.clickedLocation && (
+            <Marker position={this.state.clickedLocation} icon={messageIcon}>
+              <Popup>
+                <p>Address: {this.state.clickedAddress}</p>
+              </Popup>
+            </Marker>
           )}
           {this.state.messages.map(message => (
             <Marker
@@ -212,6 +239,7 @@ class App extends Component {
             formSubmitted={this.formSubmitted}
             valueChanged={this.valueChanged}
             sendMessage={this.sendMessage}
+            clickedAddress={this.state.clickedAddress} // Truyền địa chỉ xuống component con
           />
         ) : (
           <Card body className="thanks-form">
