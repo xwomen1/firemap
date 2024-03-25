@@ -1,0 +1,52 @@
+body {
+  margin: 0px;
+  width: 100vw;
+  height: 100vh;
+}
+
+#root {
+  height: 100%;
+}
+
+.map {
+  height: 100%;
+}
+
+video {
+ display: flex;
+}
+
+.message-form {
+  z-index: 999;
+  display: flex;
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  height: 100vh; /* Chiều cao của toàn bộ trang */
+}
+
+
+.thanks-form {
+  z-index: 999;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  max-width: 220px;
+}
+
+.footer {
+  z-index: 999;
+  position: absolute;
+  bottom: 35px;
+  left: 5px;
+  padding: 5px;
+}
+.form-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.column {
+  width: 45%; /* Điều chỉnh chiều rộng của các cột */
+}
+
+
