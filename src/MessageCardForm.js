@@ -124,19 +124,33 @@ const MessageCardForm = (props) => {
     </FormGroup>
     <FormGroup check>
           <Label check>
-          <Input type="checkbox" name="InsuranceElectronic" checked={state.userMessage.InsuranceElectronic} onChange={handleChange} />{' '}
+          <Input 
+          type="checkbox" 
+          name="InsuranceElectronic" 
+          checked={state.userMessage.InsuranceElectronic}
+           onChange={handleChange} />
             Insurance Electronic
           </Label>
         </FormGroup>
-        <FormGroup>
-  <Label for="InsuranceGas">Insurance Gas</Label>
+    <FormGroup check>
+          <Label check> 
+          <Input
+          type="checkbox" 
+          name="InsuranceGas" 
+          id="InsuranceGas" 
+          checked={state.userMessage.InsuranceGas} 
+          onChange={handleChange} 
+          />
+          Insurance Gas
+          </Label>
+  {/* <Label for="InsuranceGas">Insurance Gas</Label>
   <Input 
     type="checkbox" 
     name="InsuranceGas" 
     id="InsuranceGas" 
     checked={state.userMessage.InsuranceGas} 
     onChange={handleChange} 
-  />
+  /> */}
 </FormGroup>
 <FormGroup>
   <Label for="Repair">Repair</Label>

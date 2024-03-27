@@ -223,9 +223,9 @@ class App extends Component {
           ))}
         </Map>
         {!this.state.showMessageForm ? (
-          <Button className="message-form" onClick={this.showMessageForm} color="info">
-            Add a Message
-          </Button>
+          <form className="message-form" onClick={this.showMessageForm} color="info">
+           
+          </form>
         ) : !this.state.sentMessage ? (
           <MessageCardForm
             messages={this.state.messages}

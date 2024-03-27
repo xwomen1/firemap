@@ -18,11 +18,21 @@ video {
 
 .message-form {
   z-index: 999;
-  display: flex;
-  justify-content: center; /* Căn giữa theo chiều ngang */
-  align-items: center; /* Căn giữa theo chiều dọc */
-  height: 100vh; /* Chiều cao của toàn bộ trang */
+  position: fixed; /* Hoặc position: absolute */
+  top: 50%;
+  right: 20px; /* Đặt khoảng cách từ popup đến lề phải của màn hình */
+  transform: translateY(-50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  max-width: 80%;
+  max-height: 80vh; /* Chiều cao tối đa là 80% của chiều cao hiển thị của trình duyệt */
+  overflow-y: auto; /* Cho phép cuộn nếu popup quá cao */
 }
+
+/* Các quy tắc khác giữ nguyên */
+
 
 
 .thanks-form {
@@ -48,5 +58,6 @@ video {
 .column {
   width: 45%; /* Điều chỉnh chiều rộng của các cột */
 }
+
 
 
